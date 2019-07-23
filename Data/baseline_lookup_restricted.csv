@@ -1,0 +1,4 @@
+model, compName, seqacc, std, min, max
+Baseline, heldout tables, 7.86458333, 0.0214049194, 4.68750000, 11.97916667
+Baseline, heldout compositions, 43.28125000, 0.0927156481, 20.31250000, 53.12500000
+Baseline, heldout inputs, 38.25000000, 0.0447911822, 30, 42.5

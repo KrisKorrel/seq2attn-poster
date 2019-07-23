@@ -1,0 +1,5 @@
+model, compName, seqacc, std, min, max
+Seq2attn, heldout compositions, 100, 0, 100, 100
+Seq2attn, heldout inputs, 100, 0, 100, 100
+Seq2attn, heldout tables, 100, 0, 100, 100
+Seq2attn, new compositions, 99.6875, 0.9375, 96.8750, 100.0000

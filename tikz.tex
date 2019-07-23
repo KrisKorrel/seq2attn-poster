@@ -1,0 +1,27 @@
+% These are imports from the figures in Kris' other github repo added by Verna for the corruption results
+% We can change style / colours if necessary
+\usepackage[mode=buildnew]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usepackage{pgfplots}
+\pgfplotsset{
+    discard if not/.style 2 args={
+        x filter/.code={
+            \edef\tempa{\thisrow{#1}}
+            \edef\tempb{#2}
+            \ifx\tempa\tempb
+            \else
+            \def\pgfmathresult{inf}
+            \fi
+        }
+    },ymin=0,ymax=1,
+    compat=newest
+}
+\usepgfplotslibrary{fillbetween}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.13}
+\usepgfplotslibrary{colormaps} % LATEX and plain TEX
+\definecolor{awesome}{rgb}{1.0, 0.13, 0.32}
+\definecolor{magenta_mtplotlib}{rgb}{1.0, 0.0, 1.0}
+\definecolor{green_mtplotlib}{rgb}{0.0, 0.5019607843137255, 0.0}
+\definecolor{blue_mtplotlib}{rgb}{0.0, 0.0, 1.0}

@@ -1,0 +1,30 @@
+\documentclass{standalone}
+\begin{document}
+
+\begin{tikzpicture}
+\begin{axis}[
+    smooth,
+    width=0.8\linewidth,height=0.6\linewidth,
+    anchor=above north,
+    ymax=1,
+    xmax=30,
+    xmin=0,
+    xtick={0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50},
+    tickwidth=2pt,
+    xlabel=epochs,
+    ylabel={{sequence accuracy}},
+    ytick={0,0.125,0.25,0.375,0.5,0.6250,0.75,0.8750,1.0},
+    yticklabels={$\textcolor{black}{\nicefrac{0}{8}}$,$\textcolor{black}{\nicefrac{1}{8}}$,$\textcolor{black}{\nicefrac{2}{8}}$,$\textcolor{black}{\nicefrac{3}{8}}$,$\textcolor{black}{\nicefrac{4}{8}}$,$\textcolor{black}{\nicefrac{5}{8}}$,$\textcolor{black}{\nicefrac{6}{8}}$,$\textcolor{black}{\nicefrac{7}{8}}$,$\textcolor{black}{\nicefrac{8}{8}}$ },
+    axis on top,
+    ticklabel style = {font=\small}
+    ]
+
+        \addplot [name path=upper,draw=none] table[x=epochs, y expr=\thisrow{average}+\thisrow{confidence}] {Data/corruption-lookup-seq2attn.csv};
+        \addplot [name path=lower,draw=none] table[x=epochs, y expr=\thisrow{average}-\thisrow{confidence}] {Data/corruption-lookup-seq2attn.csv};
+        \addplot [fill=green_mtplotlib!10] fill between[of=upper and lower];
+        \addplot [mark=none, color=green_mtplotlib, line width=1pt] table [x=epochs,y=average] {Data/corruption-lookup-seq2attn.csv};
+        \node at (axis cs:29.5,0.75) [anchor=north east, font=\small] {overgen.};
+        \addplot [color=red!80, line width=1pt, style=dashed] coordinates{(0,0.625) (30,0.625)};
+\end{axis}
+\end{tikzpicture}
+\end{document}

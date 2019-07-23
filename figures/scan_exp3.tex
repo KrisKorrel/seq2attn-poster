@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    axis x line*=bottom,
+    axis y line*=left,
+    symbolic x coords={1,2,4,8,16,32,64,128,256,512,1024},
+    anchor=above north,
+    ymax=100,
+    tickwidth=6pt,
+    bar width=12pt,
+    enlarge x limits = 0.06,
+    xtick=data,
+    xticklabel style={align=center, font=\small},
+    ylabel=sequence accuracy,
+    xlabel=Number of training examples containing \texttt{look around right},
+    % legend pos=north east,
+    %legend columns=2,
+    %legend style={at={(0.85,1.27)}},
+    height=0.4\linewidth,
+    width=0.6\linewidth
+    ]
+        \addplot [style={fill=green_mtplotlib},error bars/.cd, y dir=both,y explicit]  
+        table [x=test set, y=mean,y error=conf, col sep=comma,] {./Data/scan_exp3_seq2attn.csv};	
+
+        \addplot [pattern=north east lines, pattern color=red,error bars/.cd, y dir=both,y explicit]  
+        table [x=test set, y=mean,y error=conf, col sep=comma,] {./Data/scan_exp3_baseline.csv};
+        
+        %\legend{seq2attn,baseline}	
+\end{axis}
+\end{tikzpicture}

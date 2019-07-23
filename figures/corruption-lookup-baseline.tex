@@ -1,0 +1,57 @@
+\documentclass{standalone}
+\usepackage{graphicx}
+\usepackage[mode=buildnew]{standalone}
+\usepackage{tikz}
+\usepackage{nicefrac}
+\usepackage{pgfplots}
+\pgfplotsset{
+    discard if not/.style 2 args={
+        x filter/.code={
+            \edef\tempa{\thisrow{#1}}
+            \edef\tempb{#2}
+            \ifx\tempa\tempb
+            \else
+            \def\pgfmathresult{inf}
+            \fi
+        }
+    },ymin=0,ymax=1,
+    compat=newest
+}
+\usepgfplotslibrary{fillbetween}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.13}
+\usepgfplotslibrary{colormaps} % LATEX and plain TEX
+\definecolor{awesome}{rgb}{1.0, 0.13, 0.32}
+\definecolor{magenta_mtplotlib}{rgb}{1.0, 0.0, 1.0}
+\definecolor{green_mtplotlib}{rgb}{0.0, 0.5019607843137255, 0.0}
+\definecolor{blue_mtplotlib}{rgb}{0.0, 0.0, 1.0}
+
+\begin{document}
+
+\begin{tikzpicture}
+\begin{axis}[
+    smooth,
+    anchor=above north,
+    width=0.8\linewidth,height=0.6\linewidth,
+    ymax=1,
+    xmax=30,
+    xmin=0,
+    xtick={0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50},
+    tickwidth=2pt,
+    ylabel=sequence accuracy,
+    xlabel=epochs,
+    ytick={0,0.125,0.25,0.375,0.5,0.6250,0.75,0.8750,1.0},
+    yticklabels={${\nicefrac{0}{8}}$,$\nicefrac{1}{8}$,$\nicefrac{2}{8}$,$\nicefrac{3}{8}$,$\nicefrac{4}{8}$,$\nicefrac{5}{8}$,$\nicefrac{6}{8}$,$\nicefrac{7}{8}$,$\nicefrac{8}{8}$ },
+    axis on top,
+    ticklabel style = {font=\small}
+    ]
+
+        \addplot [name path=upper,draw=none] table[x=epochs, y expr=\thisrow{average}+\thisrow{confidence}] {Data/corruption-lookup-baseline.csv};
+        \addplot [name path=lower,draw=none] table[x=epochs, y expr=\thisrow{average}-\thisrow{confidence}] {Data/corruption-lookup-baseline.csv};
+        \addplot [fill=green_mtplotlib!10] fill between[of=upper and lower];
+        \addplot [mark=none, color=green_mtplotlib, line width=1pt] table [x=epochs,y=average] {Data/corruption-lookup-baseline.csv};
+        \node at (axis cs:14.5,0.75) [anchor=north east, font=\small] {overgen.};
+        \addplot [color=red!80, line width=1pt, style=dashed] coordinates{(0,0.625) (30,0.625)};
+\end{axis}
+\end{tikzpicture}
+\end{document}
